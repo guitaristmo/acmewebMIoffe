@@ -3,10 +3,8 @@ package statusmgr;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicLong;
 
-import statusmgr.beans.ServerStatus;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import statusmgr.beans.*;
 
 /**
  * Controller for all web/REST requests about the status of servers
@@ -38,5 +36,44 @@ public class StatusController {
         System.out.println("*** DEBUG INFO ***" + details);
         return new ServerStatus(counter.incrementAndGet(),
                             String.format(template, name));
+    }
+
+    /**
+     * Deals with requests that specify details
+     * @param name the name of the requester
+     * @param details the details requested
+     * @return a server status object with all the details requested
+     */
+    @RequestMapping(value = "/status/detailed")
+    public ServerStatusInterface getDetailedServiceStatus(@RequestParam(value="name", defaultValue="Anonymous") String name, @RequestParam (required = true) List<String> details)
+    {
+        ServerStatusInterface status = new ServerStatus(counter.incrementAndGet(), String.format(template, name));
+
+        for (String detail : details)
+        {
+            switch (detail)
+            {
+                case "operations":
+                {
+                    status = new DetailedServerStatusWithOperations(status);
+                    break;
+                }
+                case "extensions":
+                {
+                    status = new DetailedServerStatusWithExtensions(status);
+                    break;
+                }
+                case "memory":
+                {
+                    status = new DetailedServerStatusWithMemory(status);
+                    break;
+                }
+                default:
+                {
+                    throw new InvalidDetailException("Invalid details option: junkERROR");
+                }
+            }
+        }
+        return status;
     }
 }
