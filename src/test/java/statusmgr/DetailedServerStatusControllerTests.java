@@ -117,13 +117,10 @@ public class DetailedServerStatusControllerTests
                         "Kubernetes, RAID-6], and its memory is Running low"));
     }
 
-//    @Test
-//    public void invalidDetailParamInDetailsRequest() throws Exception
-//    {
-//        this.mockMvc.perform(get("/server/status/detailed")
-//                .param("details", "memory,operations,junkERROR"))
-//                .andDo(print()).andExpect(status().isOk())
-//                .andExpect(jsonPath("$.contentHeader").value("Server Status requested by Noach")).
-//                andExpect(jsonPath("$.statusDesc").value("Server is up, and is operating normally, and its memory is Running low"));
-//    }
+    @Test
+    public void invalidDetailParamInDetailsRequest() throws Exception
+    {
+        this.mockMvc.perform(get("/server/status/detailed")
+                .param("details", "memory,operations,junkERROR")).andExpect(status().is4xxClientError());
+    }
 }

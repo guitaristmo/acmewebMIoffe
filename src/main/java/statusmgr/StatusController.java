@@ -70,7 +70,7 @@ public class StatusController {
                 }
                 default:
                 {
-                    throw new InvalidDetailException("Invalid details option: junkERROR");
+                    throw new InvalidDetailException();
                 }
             }
         }
