@@ -1,4 +1,4 @@
-package statusmgr.beans;
+package com.acme.statusmgr.beans;
 
 /**
  * Abstract base class for all detailed Server Status objects.
