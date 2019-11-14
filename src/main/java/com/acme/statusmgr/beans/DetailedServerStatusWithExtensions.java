@@ -1,6 +1,6 @@
-package statusmgr.beans;
+package com.acme.statusmgr.beans;
 
-import servermgr.ServerManager;
+import com.acme.servermgr.ServerManager;
 
 /**
  * Represents a server status that includes an extensions detail.

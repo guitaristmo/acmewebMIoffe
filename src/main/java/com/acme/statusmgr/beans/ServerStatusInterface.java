@@ -1,4 +1,4 @@
-package statusmgr.beans;
+package com.acme.statusmgr.beans;
 
 /**
  * Interface for all objects representing Server Status.

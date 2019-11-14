@@ -1,4 +1,4 @@
-package statusmgr;
+package com.acme.statusmgr;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
