@@ -1,5 +1,7 @@
 package com.acme.statusmgr.beans;
 
+import com.acme.servermgr.ServerManager;
+
 /**
  * Abstract base class for all detailed Server Status objects.
  * Implements the ServerStatusInterface so that all deriving
@@ -24,4 +26,7 @@ public abstract class DetailedServerStatus implements ServerStatusInterface
     }
 
     abstract public String getStatusDesc();
+
+    @Override
+    public ServerManager accessServerManager() { return detailedServerStatus.accessServerManager(); }
 }
