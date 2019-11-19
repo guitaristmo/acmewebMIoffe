@@ -1,5 +1,6 @@
 package com.acme.servermgr;
 
+import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 
 /**
@@ -7,6 +8,7 @@ import org.springframework.stereotype.Service;
  * monitor a server, but would be used for unit tests
  */
 @Service
+@Primary
 public class FakeMonitor implements MonitorableServer
 {
     @Override
@@ -16,17 +18,17 @@ public class FakeMonitor implements MonitorableServer
 
     @Override
     public String determineCurrentOperations() {
-        return ", and is operating normally";
+        return " is operating normally";
     }
 
     @Override
     public String determineCurrentExtension() {
-        return ", and is using these extensions - [Hypervisor, Kubernetes, RAID-6]";
+        return " is using these extensions - [Hypervisor, Kubernetes, RAID-6]";
     }
 
     @Override
     public String determineCurrentMemory() {
-        return ", and its memory is Running low";
+        return " its memory is Running low";
     }
 
     @Override

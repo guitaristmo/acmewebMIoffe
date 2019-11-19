@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
  * the actual product, made for a school project.
  */
 @Service
-@Primary
+//@Primary
 public class SlowRealMonitor implements MonitorableServer {
     @Override
     public String determineServerStatus() {
