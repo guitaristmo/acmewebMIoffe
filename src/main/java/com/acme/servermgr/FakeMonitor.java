@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
  * monitor a server, but would be used for unit tests
  */
 @Service
-@Primary
 public class FakeMonitor implements MonitorableServer
 {
     @Override
