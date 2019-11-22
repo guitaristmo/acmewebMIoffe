@@ -1,5 +1,6 @@
 package com.acme.statusmgr.beans.simple;
 
+import com.acme.servermgr.ServerManager;
 import com.acme.statusmgr.beans.ServerStatusInterface;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import org.springframework.stereotype.Service;
@@ -32,4 +33,7 @@ public abstract class SimpleDetailedServerStatus implements ServerStatusInterfac
     }
 
     abstract public String getStatusDesc();
+
+    @Override
+    public ServerManager accessServerManager() { return detailedServerStatus.accessServerManager(); }
 }

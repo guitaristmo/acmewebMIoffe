@@ -1,5 +1,6 @@
 package com.acme.statusmgr.beans.simple;
 
+import com.acme.Application;
 import com.acme.servermgr.ServerManager;
 import com.acme.statusmgr.beans.ServerStatusInterface;
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -15,6 +16,11 @@ public class SimpleServerStatus implements ServerStatusInterface{
     private String statusDesc = "Unknown";
 
     /**
+     * This class now uses an instance of ServerManager
+     */
+    private ServerManager serverManager;
+
+    /**
      * Construct a ServerStatus using info passed in for identification, and obtaining current
      * server status from the appropriate Manager class.
      *
@@ -25,12 +31,8 @@ public class SimpleServerStatus implements ServerStatusInterface{
         this.id = id;
         this.contentHeader = contentHeader;
 
-        // Obtain current status of server
-        this.statusDesc = ServerManager.getCurrentServerStatus();
-    }
-
-    public SimpleServerStatus() {
-
+        // Obtain and save reference to the instance of ServerManager
+        serverManager = (ServerManager) Application.getApplicationContext().getBean("serverManager");
     }
 
     @JsonInclude(JsonInclude.Include.NON_DEFAULT)
@@ -41,10 +43,7 @@ public class SimpleServerStatus implements ServerStatusInterface{
     @JsonInclude(JsonInclude.Include.NON_DEFAULT)
     public String getContentHeader() { return null; }
 
+    public String getStatusDesc() { return serverManager.getCurrentServerStatus(); }
 
-    public String getStatusDesc() {
-        return statusDesc;
-    }
-
-
+    public ServerManager accessServerManager(){return serverManager;}
 }

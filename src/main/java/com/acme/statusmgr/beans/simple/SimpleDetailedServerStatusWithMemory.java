@@ -17,5 +17,5 @@ public class SimpleDetailedServerStatusWithMemory extends SimpleDetailedServerSt
      * @return a String representing the server status with memory detail
      */
     @Override
-    public String getStatusDesc() { return detailedServerStatus.getStatusDesc() + ", and"+ServerManager.getCurrentMemory(); }
+    public String getStatusDesc() { return detailedServerStatus.getStatusDesc() + ", and"+detailedServerStatus.accessServerManager().getCurrentMemory(); }
 }
