@@ -1,11 +1,14 @@
-package com.acme.statusmgr.beans;
+package com.acme.statusmgr.beans.simple;
 
 import com.acme.servermgr.ServerManager;
+import com.acme.statusmgr.beans.ServerStatusInterface;
+import com.fasterxml.jackson.annotation.JsonInclude;
 
 /**
  * A POJO that represents Server Status and can be used to generate JSON for that status
+ * Used when the id and content header should not be displayed
  */
-public class ServerStatus implements ServerStatusInterface{
+public class SimpleServerStatus implements ServerStatusInterface{
 
     private  long id;
     private String contentHeader;
@@ -18,7 +21,7 @@ public class ServerStatus implements ServerStatusInterface{
      * @param id                a numeric identifier/counter of which request this
      * @param contentHeader     info about the request
      */
-    public ServerStatus(long id, String contentHeader) {
+    public SimpleServerStatus(long id, String contentHeader) {
         this.id = id;
         this.contentHeader = contentHeader;
 
@@ -26,18 +29,17 @@ public class ServerStatus implements ServerStatusInterface{
         this.statusDesc = ServerManager.getCurrentServerStatus();
     }
 
-    public ServerStatus() {
+    public SimpleServerStatus() {
 
     }
 
+    @JsonInclude(JsonInclude.Include.NON_DEFAULT)
     public long getId() {
-        return id;
+        return 0;
     }
 
-    public String getContentHeader() {
-
-        return contentHeader;
-    }
+    @JsonInclude(JsonInclude.Include.NON_DEFAULT)
+    public String getContentHeader() { return null; }
 
 
     public String getStatusDesc() {

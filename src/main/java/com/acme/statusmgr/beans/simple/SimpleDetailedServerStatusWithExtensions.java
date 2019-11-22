@@ -1,13 +1,14 @@
-package com.acme.statusmgr.beans;
+package com.acme.statusmgr.beans.simple;
 
 import com.acme.servermgr.ServerManager;
+import com.acme.statusmgr.beans.ServerStatusInterface;
 
 /**
  * Represents a server status that includes an extensions detail.
  */
-public class DetailedServerStatusWithExtensions extends DetailedServerStatus
+public class SimpleDetailedServerStatusWithExtensions extends SimpleDetailedServerStatus
 {
-    public DetailedServerStatusWithExtensions(ServerStatusInterface baseServerStatus)
+    public SimpleDetailedServerStatusWithExtensions(ServerStatusInterface baseServerStatus)
     { super(baseServerStatus); }
 
     /**
