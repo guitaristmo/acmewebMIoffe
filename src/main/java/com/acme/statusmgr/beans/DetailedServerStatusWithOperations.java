@@ -16,5 +16,5 @@ public class DetailedServerStatusWithOperations extends DetailedServerStatus
      * @return a String representing the server status with operations detail
      */
     @Override
-    public String getStatusDesc() { return detailedServerStatus.getStatusDesc() +", and"+ ServerManager.getCurrentOperations(); }
+    public String getStatusDesc() { return detailedServerStatus.getStatusDesc() + ", and"+detailedServerStatus.accessServerManager().getCurrentOperations(); }
 }

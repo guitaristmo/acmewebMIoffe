@@ -16,5 +16,5 @@ public class DetailedServerStatusWithExtensions extends DetailedServerStatus
      * @return a String representing the server status with extensions detail
      */
     @Override
-    public String getStatusDesc() { return detailedServerStatus.getStatusDesc() + ", and"+ServerManager.getCurrentExtension(); }
+    public String getStatusDesc() { return detailedServerStatus.getStatusDesc() + ", and"+detailedServerStatus.accessServerManager().getCurrentExtension();  }
 }
