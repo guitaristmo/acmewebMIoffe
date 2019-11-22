@@ -1,12 +1,13 @@
-package com.acme.statusmgr.beans;
+package com.acme.statusmgr.beans.complex;
 
 import com.acme.Application;
 import com.acme.servermgr.ServerManager;
+import com.acme.statusmgr.beans.ServerStatusInterface;
 
 /**
  * A POJO that represents Server Status and can be used to generate JSON for that status
  */
-public class ServerStatus implements ServerStatusInterface{
+public class ServerStatus implements ServerStatusInterface {
 
     private  long id;
     private String contentHeader;

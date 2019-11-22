@@ -3,6 +3,9 @@ package com.acme.statusmgr;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicLong;
 
+import com.acme.statusmgr.beans.complex.ServerStatus;
+import com.acme.statusmgr.beans.simple.SimpleServerStatusFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import com.acme.statusmgr.beans.*;
 
@@ -28,6 +31,9 @@ import com.acme.statusmgr.beans.*;
 @RequestMapping("/server")
 public class StatusController {
 
+    @Autowired
+    private ServerStatusFactoryInterface serverStatusFactory;
+
     protected static final String template = "Server Status requested by %s";
     protected final AtomicLong counter = new AtomicLong();
 
@@ -45,9 +51,18 @@ public class StatusController {
      * @return a server status object with all the details requested
      */
     @RequestMapping(value = "/status/detailed")
-    public ServerStatusInterface getDetailedServiceStatus(@RequestParam(value="name", defaultValue="Anonymous") String name, @RequestParam (required = true) List<String> details)
+    public ServerStatusInterface getDetailedServiceStatus(@RequestParam(value="name", defaultValue="Anonymous") String name,
+                                                          @RequestParam (required = true) List<String> details, @RequestParam (required = false) String levelofdetail)
     {
-        ServerStatusInterface status = new ServerStatus(counter.incrementAndGet(), String.format(template, name));
+        if(levelofdetail != null)
+        {
+            if(levelofdetail.equals("simple"))
+                serverStatusFactory = new SimpleServerStatusFactory();
+            else if(!levelofdetail.equals("complex"))
+                throw new InvalidComplexLevelException();
+        }
+
+        ServerStatusInterface status = serverStatusFactory.getServerStatus(counter.incrementAndGet(), String.format(template, name));
 
         for (String detail : details)
         {
@@ -55,17 +70,17 @@ public class StatusController {
             {
                 case "operations":
                 {
-                    status = new DetailedServerStatusWithOperations(status);
+                    status = serverStatusFactory.getDetailedServerStatusWithOperations(status);
                     break;
                 }
                 case "extensions":
                 {
-                    status = new DetailedServerStatusWithExtensions(status);
+                    status = serverStatusFactory.getDetailedServerStatusWithExtensions(status);
                     break;
                 }
                 case "memory":
                 {
-                    status = new DetailedServerStatusWithMemory(status);
+                    status = serverStatusFactory.getDetailedServerStatusWithMemory(status);
                     break;
                 }
                 default:
