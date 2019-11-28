@@ -91,4 +91,9 @@ public class StatusController {
         }
         return status;
     }
+
+    @RequestMapping("/disk/status")
+    public DiskStatus getdiskStatus(@RequestParam(value="name", defaultValue="Anonymous") String name) {
+        return new DiskStatus(counter.incrementAndGet(), String.format(template, name));
+    }
 }
