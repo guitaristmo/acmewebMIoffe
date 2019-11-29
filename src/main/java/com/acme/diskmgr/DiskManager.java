@@ -5,26 +5,30 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.stream.Collectors;
 
+/**
+ * Class that manages info about the disk
+ */
 public class DiskManager
 {
+    private final static String[] diskCommand = new String[]{"cmd", "/C", "Dir", "/S", "C:*.java"};
+
     /**
-     * simple demo to run windows check-disk 'chkdsk' command.
-     * Similar code can run mac OS (unix) commands like " du -c -d1 ".
+     * checks the disk status with the chkdsk command on disk c:
+     * @return string representing current status of the c: disk
      */
     public static String checkDiskStatus()
     {
         Runtime rt = Runtime.getRuntime();
 
         try {
-            Process chkProcess = rt.exec(new String[]{"chkdsk", "c:"});
+            Process chkProcess = rt.exec(diskCommand);
 
-            /**
-             * This will read the output coming from the command (into our input), and collect
-             * all of the output into one string.
+            /*
+              This will read the output coming from the command (into our input), and collect
+              all of the output into one string.
              */
-            String result = new BufferedReader(new InputStreamReader(chkProcess.getInputStream()))
+            return new BufferedReader(new InputStreamReader(chkProcess.getInputStream()))
                                             .lines().collect(Collectors.joining("\n"));
-            return result;
 
         } catch (IOException e) { e.printStackTrace(); }
 
