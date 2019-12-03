@@ -10,8 +10,7 @@ import java.util.stream.Collectors;
  */
 public class DiskManager
 {
-    private final static String[] diskCommand = new String[]{"cmd", "/C", "Dir", "/S", "C:*.java"};
-
+    private final static String[] diskCommand = new String[]{"cmd", "/C", "Dir", "/S", "C:\\*.java"};
     /**
      * checks the disk status with the chkdsk command on disk c:
      * @return string representing current status of the c: disk
