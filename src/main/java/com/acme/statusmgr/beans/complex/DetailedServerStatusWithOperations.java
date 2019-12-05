@@ -1,6 +1,5 @@
 package com.acme.statusmgr.beans.complex;
 
-import com.acme.servermgr.ServerManager;
 import com.acme.statusmgr.beans.ServerStatusInterface;
 
 /**
@@ -17,5 +16,5 @@ public class DetailedServerStatusWithOperations extends DetailedServerStatus
      * @return a String representing the server status with operations detail
      */
     @Override
-    public String getStatusDesc() { return detailedServerStatus.getStatusDesc() + ", and"+detailedServerStatus.accessServerManager().getCurrentOperations(); }
+    public String generateStatusDesc() { return detailedServerStatus.generateStatusDesc() + ", and"+detailedServerStatus.accessServerManager().getCurrentOperations(); }
 }

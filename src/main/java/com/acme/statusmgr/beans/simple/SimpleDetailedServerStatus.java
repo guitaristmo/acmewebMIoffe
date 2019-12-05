@@ -24,6 +24,8 @@ public abstract class SimpleDetailedServerStatus implements ServerStatusInterfac
 
     public SimpleDetailedServerStatus(ServerStatusInterface baseServerStatus) { detailedServerStatus = baseServerStatus; }
 
+    public void setStatusDesc(String statusDesc){detailedServerStatus.setStatusDesc(statusDesc);}
+
     @JsonInclude(JsonInclude.Include.NON_DEFAULT)
     public long getId() { return 0; }
 
@@ -32,7 +34,9 @@ public abstract class SimpleDetailedServerStatus implements ServerStatusInterfac
         return null;
     }
 
-    abstract public String getStatusDesc();
+    abstract public String generateStatusDesc();
+
+    public String getStatusDesc(){return detailedServerStatus.getStatusDesc();}
 
     @Override
     public ServerManager accessServerManager() { return detailedServerStatus.accessServerManager(); }

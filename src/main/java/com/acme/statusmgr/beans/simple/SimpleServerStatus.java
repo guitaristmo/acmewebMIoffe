@@ -13,7 +13,7 @@ public class SimpleServerStatus implements ServerStatusInterface{
 
     private  long id;
     private String contentHeader;
-    private String statusDesc = "Unknown";
+    private String statusDesc;
 
     /**
      * This class now uses an instance of ServerManager
@@ -43,7 +43,11 @@ public class SimpleServerStatus implements ServerStatusInterface{
     @JsonInclude(JsonInclude.Include.NON_DEFAULT)
     public String getContentHeader() { return null; }
 
-    public String getStatusDesc() { return serverManager.getCurrentServerStatus(); }
+    public String getStatusDesc(){return statusDesc;}
+
+    public void setStatusDesc(String statusDesc){this.statusDesc = statusDesc;}
+
+    public String generateStatusDesc() { return serverManager.getCurrentServerStatus(); }
 
     public ServerManager accessServerManager(){return serverManager;}
 }

@@ -15,5 +15,9 @@ public interface ServerStatusInterface
 
     String getStatusDesc();
 
+    String generateStatusDesc();
+
+    void setStatusDesc(String statusDesc);
+
     ServerManager accessServerManager();
 }

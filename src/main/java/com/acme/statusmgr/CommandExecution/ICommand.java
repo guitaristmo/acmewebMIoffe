@@ -1,7 +1,8 @@
 package com.acme.statusmgr.CommandExecution;
 
-import com.acme.statusmgr.beans.ServerStatusInterface;
-
+/**
+ * Interface for commands to be executed by Simple Executor
+ */
 public interface ICommand {
     void execute();
 }

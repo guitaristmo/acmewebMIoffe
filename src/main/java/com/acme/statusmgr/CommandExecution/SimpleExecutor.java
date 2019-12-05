@@ -1,5 +1,9 @@
 package com.acme.statusmgr.CommandExecution;
 
+/**
+ * Simple executor that executes commands implementing
+ * the ICommand Interface
+ */
 public class SimpleExecutor
 {
     ICommand command;

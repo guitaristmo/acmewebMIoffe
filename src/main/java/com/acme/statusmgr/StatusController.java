@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.concurrent.atomic.AtomicLong;
 
 import com.acme.statusmgr.CommandExecution.GetBasicServerStatusCommand;
+import com.acme.statusmgr.CommandExecution.GetDetailedServerStatusCommand;
 import com.acme.statusmgr.CommandExecution.SimpleExecutor;
 import com.acme.statusmgr.beans.complex.ServerStatus;
 import com.acme.statusmgr.beans.simple.SimpleServerStatusFactory;
@@ -58,42 +59,46 @@ public class StatusController {
     public ServerStatusInterface getDetailedServiceStatus(@RequestParam(value="name", defaultValue="Anonymous") String name,
                                                           @RequestParam (required = true) List<String> details, @RequestParam (required = false) String levelofdetail)
     {
-        if(levelofdetail != null)
-        {
-            if(levelofdetail.equals("simple"))
-                serverStatusFactory = new SimpleServerStatusFactory();
-            else if(!levelofdetail.equals("complex"))
-                throw new InvalidComplexLevelException();
-        }
-
-        ServerStatusInterface status = serverStatusFactory.getServerStatus(counter.incrementAndGet(), String.format(template, name));
-
-        for (String detail : details)
-        {
-            switch (detail)
-            {
-                case "operations":
-                {
-                    status = serverStatusFactory.getDetailedServerStatusWithOperations(status);
-                    break;
-                }
-                case "extensions":
-                {
-                    status = serverStatusFactory.getDetailedServerStatusWithExtensions(status);
-                    break;
-                }
-                case "memory":
-                {
-                    status = serverStatusFactory.getDetailedServerStatusWithMemory(status);
-                    break;
-                }
-                default:
-                {
-                    throw new InvalidDetailException();
-                }
-            }
-        }
-        return status;
+        GetDetailedServerStatusCommand command = new GetDetailedServerStatusCommand(counter.incrementAndGet(), template, name, details, levelofdetail, serverStatusFactory);
+        SimpleExecutor executor = new SimpleExecutor(command);
+        executor.executeCommand();
+        return command.getResult();
+//        if(levelofdetail != null)
+//        {
+//            if(levelofdetail.equals("simple"))
+//                serverStatusFactory = new SimpleServerStatusFactory();
+//            else if(!levelofdetail.equals("complex"))
+//                throw new InvalidComplexLevelException();
+//        }
+//
+//        ServerStatusInterface status = serverStatusFactory.getServerStatus(counter.incrementAndGet(), String.format(template, name));
+//
+//        for (String detail : details)
+//        {
+//            switch (detail)
+//            {
+//                case "operations":
+//                {
+//                    status = serverStatusFactory.getDetailedServerStatusWithOperations(status);
+//                    break;
+//                }
+//                case "extensions":
+//                {
+//                    status = serverStatusFactory.getDetailedServerStatusWithExtensions(status);
+//                    break;
+//                }
+//                case "memory":
+//                {
+//                    status = serverStatusFactory.getDetailedServerStatusWithMemory(status);
+//                    break;
+//                }
+//                default:
+//                {
+//                    throw new InvalidDetailException();
+//                }
+//            }
+//        }
+//        return status;
     }
 
     @RequestMapping("/disk/status")
