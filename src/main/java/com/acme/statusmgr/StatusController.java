@@ -3,6 +3,8 @@ package com.acme.statusmgr;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicLong;
 
+import com.acme.statusmgr.CommandExecution.GetBasicServerStatusCommand;
+import com.acme.statusmgr.CommandExecution.SimpleExecutor;
 import com.acme.statusmgr.beans.complex.ServerStatus;
 import com.acme.statusmgr.beans.simple.SimpleServerStatusFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,8 +42,10 @@ public class StatusController {
     @RequestMapping("/status")
     public ServerStatus getServiceStatus(@RequestParam(value="name", defaultValue="Anonymous") String name, @RequestParam (required = false) List<String> details) {
         System.out.println("*** DEBUG INFO ***" + details);
-        return new ServerStatus(counter.incrementAndGet(),
-                            String.format(template, name));
+        GetBasicServerStatusCommand command = new GetBasicServerStatusCommand(counter.incrementAndGet(), template, name);
+        SimpleExecutor executor = new SimpleExecutor(command);
+        executor.executeCommand();
+        return command.getResult();
     }
 
     /**
