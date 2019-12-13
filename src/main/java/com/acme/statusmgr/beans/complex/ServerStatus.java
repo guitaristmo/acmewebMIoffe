@@ -11,7 +11,7 @@ public class ServerStatus implements ServerStatusInterface {
 
     private  long id;
     private String contentHeader;
-    private String statusDesc = "Unknown";
+    private String statusDesc;
 
     /**
      * This class now uses an instance of ServerManager
@@ -37,14 +37,13 @@ public class ServerStatus implements ServerStatusInterface {
         return id;
     }
 
-    public String getContentHeader() {
+    public String getContentHeader() { return contentHeader; }
 
-        return contentHeader;
-    }
+    public String getStatusDesc(){return statusDesc;}
 
-    public String getStatusDesc() {
-        return serverManager.getCurrentServerStatus();
-    }
+    public String generateStatusDesc() { return serverManager.getCurrentServerStatus(); }
+
+    public void setStatusDesc(String statusDesc){this.statusDesc = statusDesc;}
 
     public ServerManager accessServerManager(){return serverManager;}
 }

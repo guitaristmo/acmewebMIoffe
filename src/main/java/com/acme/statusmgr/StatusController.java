@@ -3,6 +3,10 @@ package com.acme.statusmgr;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicLong;
 
+import com.acme.statusmgr.CommandExecution.GetBasicServerStatusCommand;
+import com.acme.statusmgr.CommandExecution.GetDetailedServerStatusCommand;
+import com.acme.statusmgr.CommandExecution.GetDiskStatusCommand;
+import com.acme.statusmgr.CommandExecution.SimpleExecutor;
 import com.acme.statusmgr.beans.complex.ServerStatus;
 import com.acme.statusmgr.beans.simple.SimpleServerStatusFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,8 +44,10 @@ public class StatusController {
     @RequestMapping("/status")
     public ServerStatus getServiceStatus(@RequestParam(value="name", defaultValue="Anonymous") String name, @RequestParam (required = false) List<String> details) {
         System.out.println("*** DEBUG INFO ***" + details);
-        return new ServerStatus(counter.incrementAndGet(),
-                            String.format(template, name));
+        GetBasicServerStatusCommand command = new GetBasicServerStatusCommand(counter.incrementAndGet(), template, name);
+        SimpleExecutor executor = new SimpleExecutor(command);
+        executor.executeCommand();
+        return command.getResult();
     }
 
     /**
@@ -54,46 +60,18 @@ public class StatusController {
     public ServerStatusInterface getDetailedServiceStatus(@RequestParam(value="name", defaultValue="Anonymous") String name,
                                                           @RequestParam (required = true) List<String> details, @RequestParam (required = false) String levelofdetail)
     {
-        if(levelofdetail != null)
-        {
-            if(levelofdetail.equals("simple"))
-                serverStatusFactory = new SimpleServerStatusFactory();
-            else if(!levelofdetail.equals("complex"))
-                throw new InvalidComplexLevelException();
-        }
+        GetDetailedServerStatusCommand command = new GetDetailedServerStatusCommand(counter.incrementAndGet(), template, name, details, levelofdetail, serverStatusFactory);
+        SimpleExecutor executor = new SimpleExecutor(command);
+        executor.executeCommand();
+        return command.getResult();
 
-        ServerStatusInterface status = serverStatusFactory.getServerStatus(counter.incrementAndGet(), String.format(template, name));
-
-        for (String detail : details)
-        {
-            switch (detail)
-            {
-                case "operations":
-                {
-                    status = serverStatusFactory.getDetailedServerStatusWithOperations(status);
-                    break;
-                }
-                case "extensions":
-                {
-                    status = serverStatusFactory.getDetailedServerStatusWithExtensions(status);
-                    break;
-                }
-                case "memory":
-                {
-                    status = serverStatusFactory.getDetailedServerStatusWithMemory(status);
-                    break;
-                }
-                default:
-                {
-                    throw new InvalidDetailException();
-                }
-            }
-        }
-        return status;
     }
 
     @RequestMapping("/disk/status")
-    public DiskStatus getdiskStatus(@RequestParam(value="name", defaultValue="Anonymous") String name) {
-        return new DiskStatus(counter.incrementAndGet(), String.format(template, name));
+    public DiskStatus getDiskStatus(@RequestParam(value="name", defaultValue="Anonymous") String name) {
+        GetDiskStatusCommand command = new GetDiskStatusCommand(counter.incrementAndGet(), template, name);
+        SimpleExecutor executor = new SimpleExecutor(command);
+        executor.executeCommand();
+        return command.getResult();
     }
 }

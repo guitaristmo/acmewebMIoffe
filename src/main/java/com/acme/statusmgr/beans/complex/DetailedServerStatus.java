@@ -21,13 +21,17 @@ public abstract class DetailedServerStatus implements ServerStatusInterface
 
     public DetailedServerStatus(ServerStatusInterface baseServerStatus) { detailedServerStatus = baseServerStatus; }
 
+    public void setStatusDesc(String statusDesc){detailedServerStatus.setStatusDesc(statusDesc);}
+
     public long getId() { return detailedServerStatus.getId(); }
+
+    public String getStatusDesc(){return detailedServerStatus.getStatusDesc();}
 
     public String getContentHeader() {
         return detailedServerStatus.getContentHeader();
     }
 
-    abstract public String getStatusDesc();
+    abstract public String generateStatusDesc();
 
     @Override
     public ServerManager accessServerManager() { return detailedServerStatus.accessServerManager(); }

@@ -23,7 +23,6 @@ public class DiskStatus {
     {
         this.id = id;
         this.contentHeader = contentHeader;
-        diskCommandOutput = DiskManager.checkDiskStatus();
     }
 
     public long getId() {
@@ -35,4 +34,8 @@ public class DiskStatus {
     public String getDiskCommand(){return diskCommand;}
 
     public String getDiskCommandOutput(){return diskCommandOutput;}
+
+    public void setDiskCommandOutput(String diskCommandOutput){this.diskCommandOutput = diskCommandOutput;}
+
+    public String generateDiskCommandOutput(){return DiskManager.checkDiskStatus();}
 }
