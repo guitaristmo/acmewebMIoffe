@@ -1,12 +1,13 @@
-package com.acme.statusmgr.CommandExecution;
+package com.acme.statusmgr.CommandExecution.diskCommands;
 
+import com.acme.statusmgr.CommandExecution.ICommand;
 import com.acme.statusmgr.beans.DiskStatus;
 
 /**
  * Represents a basic request to get the
  * disk status and return it
  */
-public class GetDiskStatusCommand implements ICommand
+public class GetDiskStatusCommand implements IDiskStatusCommand
 {
     private DiskStatus result;
     private long id;
@@ -27,5 +28,6 @@ public class GetDiskStatusCommand implements ICommand
         result.setDiskCommandOutput(result.generateDiskCommandOutput());
     }
 
+    @Override
     public DiskStatus getResult(){return result;}
 }

@@ -1,8 +1,8 @@
 package com.acme.statusmgr;
 
-import com.acme.statusmgr.CommandExecution.GetBasicServerStatusCommand;
-import com.acme.statusmgr.CommandExecution.GetDetailedServerStatusCommand;
-import com.acme.statusmgr.CommandExecution.GetDiskStatusCommand;
+import com.acme.statusmgr.CommandExecution.serverStatusCommand.GetBasicServerStatusCommand;
+import com.acme.statusmgr.CommandExecution.serverStatusCommand.GetDetailedServerStatusCommand;
+import com.acme.statusmgr.CommandExecution.diskCommands.GetDiskStatusCommand;
 import com.acme.statusmgr.CommandExecution.SimpleExecutor;
 import com.acme.statusmgr.beans.DiskStatus;
 import com.acme.statusmgr.beans.ServerStatusInterface;

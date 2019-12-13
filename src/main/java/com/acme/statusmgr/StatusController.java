@@ -3,12 +3,12 @@ package com.acme.statusmgr;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicLong;
 
-import com.acme.statusmgr.CommandExecution.GetBasicServerStatusCommand;
-import com.acme.statusmgr.CommandExecution.GetDetailedServerStatusCommand;
-import com.acme.statusmgr.CommandExecution.GetDiskStatusCommand;
+import com.acme.statusmgr.CommandExecution.diskCommands.IDiskStatusCommand;
+import com.acme.statusmgr.CommandExecution.serverStatusCommand.GetBasicServerStatusCommand;
+import com.acme.statusmgr.CommandExecution.serverStatusCommand.GetDetailedServerStatusCommand;
+import com.acme.statusmgr.CommandExecution.diskCommands.GetDiskStatusCommand;
 import com.acme.statusmgr.CommandExecution.SimpleExecutor;
 import com.acme.statusmgr.beans.complex.ServerStatus;
-import com.acme.statusmgr.beans.simple.SimpleServerStatusFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import com.acme.statusmgr.beans.*;
@@ -69,7 +69,7 @@ public class StatusController {
 
     @RequestMapping("/disk/status")
     public DiskStatus getDiskStatus(@RequestParam(value="name", defaultValue="Anonymous") String name) {
-        GetDiskStatusCommand command = new GetDiskStatusCommand(counter.incrementAndGet(), template, name);
+        IDiskStatusCommand command = new GetDiskStatusCommand(counter.incrementAndGet(), template, name);
         SimpleExecutor executor = new SimpleExecutor(command);
         executor.executeCommand();
         return command.getResult();
