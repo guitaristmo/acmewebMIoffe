@@ -7,9 +7,23 @@ import com.acme.diskmgr.DiskManager;
  */
 public class DiskStatus {
 
+    private long id;
+    private String contentHeader;
     private String diskCommand = "chkdsk c:";
     private String diskCommandOutput;
     private long timeExecuted;
+
+    /**
+     * Construct a DiskStatus using info passed in for identification
+     *
+     * @param id                a numeric identifier/counter of which request this
+     * @param contentHeader     info about the request
+     */
+    public DiskStatus(long id, String contentHeader)
+    {
+        this.id = id;
+        this.contentHeader = contentHeader;
+    }
 
     public String getDiskCommand(){return diskCommand;}
 
@@ -22,4 +36,10 @@ public class DiskStatus {
     public long getTimeExecuted() { return timeExecuted; }
 
     public void setTimeExecuted(long timeExecuted) { this.timeExecuted = timeExecuted; }
+
+    public long getId() {
+        return id;
+    }
+
+    public String getContentHeader() { return contentHeader; }
 }

@@ -70,9 +70,9 @@ public class StatusController {
     }
 
     @RequestMapping("/disk/status")
-    public RequestedDiskStatus getDiskStatus(@RequestParam(value="name", defaultValue="Anonymous") String name) {
+    public DiskStatus getDiskStatus(@RequestParam(value="name", defaultValue="Anonymous") String name) {
         long id = counter.incrementAndGet();
-        IDiskStatusCommand command = new DiskStatusCommandSecurityDecorator(new DiskStatusCommandEfficiencyDecorator(new GetDiskStatusCommand(id, template, name), id, template, name), name);
+        IDiskStatusCommand command = new DiskStatusCommandSecurityDecorator(new DiskStatusCommandEfficiencyDecorator(new GetDiskStatusCommand(id, template, name)), name);
         SimpleExecutor executor = new SimpleExecutor(command);
         executor.executeCommand();
         return command.getResult();

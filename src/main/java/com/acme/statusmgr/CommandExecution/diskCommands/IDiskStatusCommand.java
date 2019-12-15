@@ -2,7 +2,6 @@ package com.acme.statusmgr.CommandExecution.diskCommands;
 
 import com.acme.statusmgr.CommandExecution.ICommand;
 import com.acme.statusmgr.beans.DiskStatus;
-import com.acme.statusmgr.beans.RequestedDiskStatus;
 
 /**
  * Interface for DiskStatus Commands
@@ -12,5 +11,5 @@ import com.acme.statusmgr.beans.RequestedDiskStatus;
  */
 public interface IDiskStatusCommand extends ICommand
 {
-    RequestedDiskStatus getResult();
+    DiskStatus getResult();
 }
