@@ -1,6 +1,6 @@
 package com.acme.statusmgr.CommandExecution.diskCommands;
 
-import com.acme.statusmgr.beans.DiskStatus;
+import com.acme.statusmgr.beans.RequestedDiskStatus;
 
 /**
  * Base class for DiskStatusCommand Decorators
@@ -14,7 +14,7 @@ public abstract class DiskStatusCommandDecorator implements IDiskStatusCommand
     public DiskStatusCommandDecorator(IDiskStatusCommand baseDiskStatusCommand){this.baseDiskStatusCommand = baseDiskStatusCommand;}
 
     @Override
-    public DiskStatus getResult() { return baseDiskStatusCommand.getResult(); }
+    public RequestedDiskStatus getResult() { return baseDiskStatusCommand.getResult(); }
 
     @Override
     public void execute() { baseDiskStatusCommand.execute(); }
