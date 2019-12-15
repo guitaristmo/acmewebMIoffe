@@ -1,6 +1,5 @@
 package com.acme.statusmgr.CommandExecution.diskCommands;
 
-import com.acme.statusmgr.CommandExecution.ICommand;
 import com.acme.statusmgr.beans.DiskStatus;
 
 /**

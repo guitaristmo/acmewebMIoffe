@@ -3,6 +3,7 @@ package com.acme.statusmgr;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicLong;
 
+import com.acme.statusmgr.CommandExecution.diskCommands.DiskStatusCommandSecurityDecorator;
 import com.acme.statusmgr.CommandExecution.diskCommands.IDiskStatusCommand;
 import com.acme.statusmgr.CommandExecution.serverStatusCommand.GetBasicServerStatusCommand;
 import com.acme.statusmgr.CommandExecution.serverStatusCommand.GetDetailedServerStatusCommand;
@@ -69,7 +70,7 @@ public class StatusController {
 
     @RequestMapping("/disk/status")
     public DiskStatus getDiskStatus(@RequestParam(value="name", defaultValue="Anonymous") String name) {
-        IDiskStatusCommand command = new GetDiskStatusCommand(counter.incrementAndGet(), template, name);
+        IDiskStatusCommand command = new DiskStatusCommandSecurityDecorator(new GetDiskStatusCommand(counter.incrementAndGet(), template, name), name);
         SimpleExecutor executor = new SimpleExecutor(command);
         executor.executeCommand();
         return command.getResult();
