@@ -9,7 +9,7 @@ import com.acme.statusmgr.beans.DiskStatus;
  */
 public abstract class DiskStatusCommandDecorator implements IDiskStatusCommand
 {
-    private IDiskStatusCommand baseDiskStatusCommand;
+    IDiskStatusCommand baseDiskStatusCommand;
 
     public DiskStatusCommandDecorator(IDiskStatusCommand baseDiskStatusCommand){this.baseDiskStatusCommand = baseDiskStatusCommand;}
 
