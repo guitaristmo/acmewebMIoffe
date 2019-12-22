@@ -3,12 +3,9 @@ package com.acme.statusmgr;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicLong;
 
-import com.acme.statusmgr.CommandExecution.diskCommands.DiskStatusCommandEfficiencyDecorator;
-import com.acme.statusmgr.CommandExecution.diskCommands.DiskStatusCommandSecurityDecorator;
-import com.acme.statusmgr.CommandExecution.diskCommands.IDiskStatusCommand;
+import com.acme.statusmgr.CommandExecution.diskCommands.*;
 import com.acme.statusmgr.CommandExecution.serverStatusCommand.GetBasicServerStatusCommand;
 import com.acme.statusmgr.CommandExecution.serverStatusCommand.GetDetailedServerStatusCommand;
-import com.acme.statusmgr.CommandExecution.diskCommands.GetDiskStatusCommand;
 import com.acme.statusmgr.CommandExecution.SimpleExecutor;
 import com.acme.statusmgr.beans.complex.ServerStatus;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -72,7 +69,8 @@ public class StatusController {
     @RequestMapping("/disk/status")
     public DiskStatus getDiskStatus(@RequestParam(value="name", defaultValue="Anonymous") String name) {
         long id = counter.incrementAndGet();
-        IDiskStatusCommand command = new DiskStatusCommandSecurityDecorator(new DiskStatusCommandEfficiencyDecorator(new GetDiskStatusCommand(id, template, name)), name);
+        IDiskStatusCommand command = new DiskStatusCommandSecurityDecorator(new DiskStatusCommandEfficiencyDecorator(new DiskStatusCommandConcurrencyDecorator(
+                                    new GetDiskStatusCommand(id, template, name))), name);
         SimpleExecutor executor = new SimpleExecutor(command);
         executor.executeCommand();
         return command.getResult();

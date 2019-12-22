@@ -31,7 +31,7 @@ public class DiskStatus {
 
     public void setDiskCommandOutput(String diskCommandOutput){this.diskCommandOutput = diskCommandOutput;}
 
-    public String generateDiskCommandOutput(){return DiskManager.checkDiskStatus();}
+    public String generateDiskCommandOutput(){return DiskManager.getInstance().checkDiskStatus();}
 
     public long getTimeExecuted() { return timeExecuted; }
 
