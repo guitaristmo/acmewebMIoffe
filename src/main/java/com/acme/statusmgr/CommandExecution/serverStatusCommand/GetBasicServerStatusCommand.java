@@ -1,5 +1,6 @@
-package com.acme.statusmgr.CommandExecution;
+package com.acme.statusmgr.CommandExecution.serverStatusCommand;
 
+import com.acme.statusmgr.CommandExecution.ICommand;
 import com.acme.statusmgr.beans.complex.ServerStatus;
 
 /**
